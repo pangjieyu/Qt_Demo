@@ -11,6 +11,7 @@ Polygon::Polygon(QVector<QPoint> points, QColor color):points(points), color(col
 
 int Polygon::getMaxX()
 {
+    if(points.empty()) return 0;
     int max = 0;
     QVector<QPoint>::iterator iter;
     for (iter=points.begin(); iter!=points.end(); iter++)
@@ -21,6 +22,7 @@ int Polygon::getMaxX()
 
 int Polygon::getMinX()
 {
+    if(points.empty()) return 0;
     int min = getMaxX();
     QVector<QPoint>::iterator iter;
     for (iter=points.begin(); iter!=points.end(); iter++)
@@ -31,6 +33,7 @@ int Polygon::getMinX()
 
 int Polygon::getMaxY()
 {
+    if(points.empty()) return 0;
     int max = 0;
     QVector<QPoint>::iterator iter;
     for (iter=points.begin(); iter!=points.end(); iter++)
@@ -41,6 +44,7 @@ int Polygon::getMaxY()
 
 int Polygon::getMinY()
 {
+    if(points.empty()) return 0;
     int min = getMaxY();
     QVector<QPoint>::iterator iterPos;
     for (iterPos=points.begin(); iterPos!=points.end(); iterPos++)

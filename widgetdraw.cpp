@@ -5,6 +5,14 @@ WidgetDraw::WidgetDraw(QWidget *parent) : QWidget(parent)
 }
 
 void WidgetDraw::paintEvent(QPaintEvent*) {
+  /*
+   * painter常用函数
+   * painter.translate(x,y)
+   * painter.scale(x,y)
+   * painter.rotate(angle)
+   * painter.setRenderHint(QPainter::Antialiasing, true);
+   *
+   * */
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing, true);
     painter.setPen(Qt::black);
@@ -80,7 +88,7 @@ double WidgetDraw::getAngle(QPoint origin, QPoint start, QPoint end) {
     }
     else//起始边不垂直
     {
-        double k = (start.y() - origin.y()) / (double)(start.x() - origin.x());//起始边斜率
+        double k = (start.y() - origin.y()) / static_cast<double>(start.x() - origin.x());//起始边斜率
         double t = (end.y() - start.y()) - k*(end.x() - start.x());//终点相对于起始边的位置
 
         flag = (start.x()>origin.x()) ? 1 : -1;//起始边向量方向，右正左负
@@ -116,8 +124,8 @@ void WidgetDraw::rotatePoints(QPoint centerPoint, QPoint p1, QPoint p2, QVector<
     for(int i=0; i<points.size(); ++i) {
         pointsNew.append(
                          QPoint(
-                                (int)(R[0][0] * points[i].x() + R[0][1] * points[i].y() + R[0][2]),
-                                (int)(R[1][0] * points[i].x() + R[1][1] * points[i].y() + R[1][2])
+                                static_cast<int>(R[0][0] * points[i].x() + R[0][1] * points[i].y() + R[0][2]),
+                                static_cast<int>(R[1][0] * points[i].x() + R[1][1] * points[i].y() + R[1][2])
                                )
                         );
     }
@@ -148,8 +156,8 @@ void WidgetDraw::rotatePoints(QPoint centerPoint, double angle, QVector<QPoint> 
     for(int i=0; i<points.size(); ++i) {
         pointsNew.append(
                          QPoint(
-                                (int)(R[0][0] * points[i].x() + R[0][1] * points[i].y() + R[0][2]),
-                                (int)(R[1][0] * points[i].x() + R[1][1] * points[i].y() + R[1][2])
+                                static_cast<int>(R[0][0] * points[i].x() + R[0][1] * points[i].y() + R[0][2]),
+                                static_cast<int>(R[1][0] * points[i].x() + R[1][1] * points[i].y() + R[1][2])
                                )
                         );
     }
@@ -251,15 +259,15 @@ QPoint WidgetDraw::intersect(QPoint s, QPoint p, QPoint p0, QPoint p1) {
     int x,y;
     if(p0.y()==p1.y())//水平裁剪边
     {
-        m=(double)(p.x()-s.x())/(double)(p.y()-s.y());
-        x=s.x()+(int)((p0.y()-s.y())*m);
+        m=static_cast<double>(p.x()-s.x())/static_cast<double>(p.y()-s.y());
+        x=s.x()+static_cast<int>((p0.y()-s.y())*m);
         y=p0.y();
     }
     else//竖直裁剪边
     {
-        m=(double)(p.y()-s.y())/(double)(p.x()-s.x());
+        m=static_cast<double>(p.y()-s.y())/static_cast<double>(p.x()-s.x());
         x = p0.x();
-        y=s.y()+(int)((p0.x()-s.x())*m);
+        y=s.y()+static_cast<int>((p0.x()-s.x())*m);
     }
     return QPoint(x,y);
 }
